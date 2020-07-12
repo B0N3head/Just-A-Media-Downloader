@@ -140,7 +140,7 @@ namespace MediaDL
             timesClicked++;
             if (timesClicked >= 20 && timesClicked <= 30)
             {
-                SlowWriter.Write("Fuck off, have you got nothing better to do", label1);
+                SlowWriter.Write("Fuck off, have yoy got nothing better to do", label1);
             }
             else if (timesClicked >= 31 && timesClicked <= 50)
             {
