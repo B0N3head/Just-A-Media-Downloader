@@ -5,7 +5,7 @@ Download youtube, vimeo, phub and much more in almost any format, audio or video
 [Supported sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)
 
 ## Roadmap
- - ## Functionality
+ - ### Functionality
 	- Youtube-dl
 		- [x] Download video/audio
 		- [x] Save video/audio to folder
@@ -25,7 +25,7 @@ Download youtube, vimeo, phub and much more in almost any format, audio or video
 		- [x] Auto next line when user paste link
 		- [x] Help page
 		- [x] [Whole website](https://bonehead.xyz/jamdl.html)
- - ## GUI
+ - ### GUI
 	- Simple and functional GUI
 		- [X] Save dialog
 		- [X] Folder dialog
