@@ -36,7 +36,7 @@ Download youtube, vimeo, phub and much more in almost any format, audio or video
 		- [X] Sound quality option 
  		- [ ] Exit dialog (if still downloading)
 	- Themes
-  	- [ ] Custom layouts
+  		- [ ] Custom layouts
 		- [ ] Custom faces
 		- [ ] Load Colour info from json
 		- [ ] Edit existing theme in program
