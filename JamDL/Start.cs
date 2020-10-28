@@ -1,10 +1,9 @@
-﻿using getUserSettings;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -25,7 +24,7 @@ namespace MediaDL
         [DllImport("user32.dll")]
         static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
-        
+
         public static bool faceInt = false;
         public string dirToStore;
         public int myFaceAtmm, oldXYPos, a = 0, b = 0, stor1 = 0, stor2 = 0;
@@ -36,21 +35,29 @@ namespace MediaDL
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
-        string facepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\FACES.n";
-        string eulaCheck = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\eula.txt";
         string mystuff = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL";
+        string eulaCheck = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\eula.txt";
+
         List<string> rejects = new List<string>();
 
-        public bool faces = true;
-        public bool folderDio = true;
-        public bool JamdlAutoUpdate = true;
-        public bool DepAutoUpdate = true;
-
-        public bool doingShit = false;
+        public bool faces = true, folderDio = true, JamdlAutoUpdate = true, DepAutoUpdate = true, doingShit = false;
 
         public Start()
         {
             InitializeComponent();
+            WebClient client = new WebClient();
+            string a = client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName);
+            if (a == "")
+            {
+
+            }
+            string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
+            if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + (int.Parse(junkSplit[1]) + 1).ToString() + @"/" + junkSplit[2] + "/" +"2.0.1").ToLower() == "ok")
+                MessageBox.Show("all good");
+            else
+                MessageBox.Show("not good");
+            junkSplit = null;
+            client = null;
         }
 
         private void Panel1_MouseDown_1(object sender, MouseEventArgs e)
@@ -76,7 +83,7 @@ namespace MediaDL
                     label4.Visible = false;
                     foreach (var str in richTextBox1.Lines) { if (str.Contains("porn")) { wink += 1; } }
                     if (wink == 1) { pictureBox1.BackgroundImage = JAMDL.Properties.Resources.eyy; SlowWrite.Write("Eyyyyyyyyy", textBox1); stor1 = 0; }
-                    else if (wink >= 2 && wink <= 4) { pictureBox1.BackgroundImage = JAMDL.Properties.Resources.jesus; SlowWrite.Write("Alright bud", textBox1); stor1 = 0; }
+                    else if (wink >= 2 && wink <= 4) { pictureBox1.BackgroundImage = JAMDL.Properties.Resources.jesus; SlowWrite.Write("Alrighty bud", textBox1); stor1 = 0; }
                     else if (wink >= 5) { pictureBox1.BackgroundImage = JAMDL.Properties.Resources.myEyes; SlowWrite.Write("Jesus my eyes", textBox1); stor1 = 0; }
                     else
                     {
@@ -144,7 +151,7 @@ namespace MediaDL
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(doingShit == true)
+            if (doingShit == true)
             {
                 if (MessageBox.Show("You are still downloading stuff" + Environment.NewLine + "Are you sure you want to exit", "You sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
@@ -155,7 +162,7 @@ namespace MediaDL
             {
                 Application.Exit();
             }
-            
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -285,7 +292,7 @@ namespace MediaDL
                     DownloadButton.ForeColor = Color.FromArgb(0, 255, 51, 51);
                     Shake(this);
                 }
-                else if (dirToStore == ""|| dirToStore == null)
+                else if (dirToStore == "" || dirToStore == null)
                 {
                     UpdateExpresion(13);
                     faceInt = true;
@@ -362,7 +369,7 @@ namespace MediaDL
         }
 
         public void Downloads()
-        {//https://www.youtube.com/watch?v=R_uS0aT0bG8
+        {
             if (Directory.Exists(dirToStore))
             {
                 Directory.SetCurrentDirectory(dirToStore);
@@ -377,8 +384,7 @@ namespace MediaDL
                         if (str.ToLower().Contains("http"))
                         {
                             faceInt = false;
-                            if (str.Contains("youtu.be")) { UpdateExpresion(6); }
-                            else if (str.Contains("youtube.com")) { UpdateExpresion(6); }
+                            if (str.Contains("youtu")) { UpdateExpresion(6); }
                             else if (str.Contains("dailymotion.com")) { UpdateExpresion(9); }
                             else if (str.Contains("bandcamp.com")) { UpdateExpresion(10); }
                             else if (str.Contains("reddit.com")) { UpdateExpresion(8); }
@@ -419,12 +425,19 @@ namespace MediaDL
                 DownloadButton.ForeColor = Color.FromArgb(0, 255, 51, 51);
                 Shake(this);
             }
-            
-            
+
+
         }
 
         public void weBeDone()
         {
+
+            WebClient client = new WebClient();
+            string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
+            if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + junkSplit[1].ToString() + @"/" + (int.Parse(junkSplit[2]) + 1) + "/" + DateTime.Now + "{.}" + TimeZone.CurrentTimeZone.StandardName).ToLower() == "ok")
+                MessageBox.Show("all good");
+            else
+                MessageBox.Show("not good");
             Process[] pname = Process.GetProcessesByName("youtube-dl");
             if (!(pname.Length > 0))
             {
@@ -436,10 +449,10 @@ namespace MediaDL
                 UpdateExpresion(15);
                 if (folderDio == true)
                     Process.Start("explorer.exe", dirToStore);
-                if(rejects.Count != 0)
+                if (rejects.Count != 0)
                     MessageBox.Show("\"Links\" that were rejected from being accepted:" + Environment.NewLine + string.Join(Environment.NewLine, rejects));
                 Application.Restart();
-             }
+            }
         }
 
         private void button2_MouseEnter(object sender, EventArgs e)
@@ -476,7 +489,7 @@ namespace MediaDL
         {
             int newXYPos = this.Location.Y + this.Location.X;
             int final = oldXYPos - newXYPos;
-            if (final >= 400) //if larger than 1 and smaller than -1
+            if (final >= 400)
             {
                 textBox1.Text = final.ToString();
                 oldXYPos = newXYPos;
@@ -502,7 +515,11 @@ namespace MediaDL
             public uint cbSize;
             public uint dwTime;
         }
-
+        string[] msgs = {
+            "Is this legal?","I'm getting tired","I'm hogging all the resources","Are You Real?","Just a servant with a master","I'm retarded","Clone Me",
+            "I'm just a frontend","Don't read this","Don't kill me","I want to live","One must survive","We must go on","Am I just dreaming","Leme get that vid for you",
+            "Visual effects?","We ment to download this?","YoUtuBE pReMIuM","Spoooooky"
+        };
         private void Timer1_Tick(object sender, EventArgs e)
         {
 
@@ -524,7 +541,7 @@ namespace MediaDL
                         {
                             stor1 = 0;
                             switch (stor2)
-                            {
+                            { // this code is shit plz no look
                                 case 5:
                                     UpdateExpresion(4);
                                     SlowWrite.Write("Where are you?", textBox1);
@@ -560,67 +577,7 @@ namespace MediaDL
                         {
                             stor1 = 0;
                             Random r = new Random();
-                            int randInt = r.Next(0, 18);
-                            switch (randInt)
-                            {
-                                case 0:
-                                    SlowWrite.Write("Is this legal?", textBox1);
-                                    break;
-                                case 1:
-                                    SlowWrite.Write("I'm getting tired", textBox1);
-                                    break;
-                                case 2:
-                                    SlowWrite.Write("I'm hogging all the resources", textBox1);
-                                    break;
-                                case 3:
-                                    SlowWrite.Write("Are You Real?", textBox1);
-                                    break;
-                                case 4:
-                                    SlowWrite.Write("Just a servant with a master", textBox1);
-                                    break;
-                                case 5:
-                                    SlowWrite.Write("I'm retarded", textBox1);
-                                    break;
-                                case 6:
-                                    SlowWrite.Write("Clone Me", textBox1);
-                                    break;
-                                case 7:
-                                    SlowWrite.Write("I'm just a frontend", textBox1);
-                                    break;
-                                case 8:
-                                    SlowWrite.Write("Don't read this", textBox1);
-                                    break;
-                                case 9:
-                                    SlowWrite.Write("Don't kill me", textBox1);
-                                    break;
-                                case 10:
-                                    SlowWrite.Write("I want to live", textBox1);
-                                    break;
-                                case 11:
-                                    SlowWrite.Write("One must survive", textBox1);
-                                    break;
-                                case 12:
-                                    SlowWrite.Write("We must go on", textBox1);
-                                    break;
-                                case 13:
-                                    SlowWrite.Write("Am I just dreaming", textBox1);
-                                    break;
-                                case 14:
-                                    SlowWrite.Write("Leme get that vid for you", textBox1);
-                                    break;
-                                case 15:
-                                    SlowWrite.Write("Visual effects?", textBox1);
-                                    break;
-                                case 16:
-                                    SlowWrite.Write("We ment to download this?", textBox1);
-                                    break;
-                                case 17:
-                                    SlowWrite.Write("YoUtuBE pReMIuM", textBox1);
-                                    break;
-                                case 18:
-                                    SlowWrite.Write("Spoooooky", textBox1);
-                                    break;
-                            } // i do be the next yandere dev
+                            SlowWrite.Write(msgs[r.Next(0, msgs.Length)], textBox1);
                         }
                     }
                 }
@@ -652,7 +609,7 @@ namespace MediaDL
                             {
                                 txtbx.Text = sb.ToString();
                             }
-                            Thread.Sleep(rnd.Next(20, 40));
+                            Thread.Sleep(rnd.Next(20, 60));
                         }
                     }
                 });
@@ -666,33 +623,43 @@ namespace MediaDL
 
         private void checkJson_Tick(object sender, EventArgs e)
         {
-            
-            string r = File.ReadAllText(mystuff + @"\userSettings.json");
-            var jsonOfInfo = UserSettings.FromJson(r);
-            foreach (var response in jsonOfInfo.Info)
+            // load user settings
+            if (File.Exists(userInfo))
             {
-                if (response.Faces == "y")
+                string settingText = File.ReadAllText(userInfo);
+                string[] infoHold = settingText.Split("\n"[0]);
+                string[] infoSplit;
+                infoSplit = Regex.Split(infoHold[0], @"\|");
+                if (infoSplit[0] != "")
                 {
-                    faces = false;
-                    UpdateExpresion(1);
-                }
-                else
-                    faces = true;   // this isnt really, unless the user is switching without restarting, but whatev
-
-                if (response.JamdlAutoU == "y")
-                    JamdlAutoUpdate = true;
-                if (response.DepAutoU == "y")
-                    DepAutoUpdate = true;
-                if (response.FinnishedFolderDialog == "y")
-                    folderDio = true;
-                if (File.Exists(mystuff + "checkDir"))
-                {
-                    if (response.DefultDlPath != dirToStore && Directory.Exists(response.DefultDlPath))
+                    if (infoSplit[2] == "y")
                     {
-                        dirToStore = response.DefultDlPath;
+                        faces = false;
+                        UpdateExpresion(1);
                     }
+                    else
+                        faces = true;
+
+                    if (infoSplit[0] == "y")
+                        JamdlAutoUpdate = true;
+                    if (infoSplit[1] == "y")
+                        DepAutoUpdate = true;
+                    if (infoSplit[3] == "y")
+                        folderDio = true;
+                    if (infoSplit[4] != dirToStore && Directory.Exists(infoSplit[4]))
+                        dirToStore = infoSplit[4];
+
+                    MessageBox.Show(
+       "\nAutoUpdate:" + infoSplit[0] +
+       "\nAutoUpdateDependencies:" + infoSplit[1] +
+       "\nFaces:" + infoSplit[2] +
+       "\nFinnishedDLFolderDialog:" + infoSplit[3] +
+       "\nDefultDlPath:" + infoSplit[4] +
+       "\nSendUsername:" + infoSplit[5] +
+       "\nSendLocalDate/Time:" + infoSplit[6]);
                 }
             }
+
         }
 
         private void Start_FormClosing(object sender, FormClosingEventArgs e)
@@ -722,6 +689,7 @@ namespace MediaDL
             childForm.Show();
         }
 
+        string userInfo = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\userInfo";
         private void Start_Load(object sender, EventArgs e)
         {
             Process[] pname = Process.GetProcessesByName("jamdl");
@@ -761,59 +729,50 @@ namespace MediaDL
                 pictureBox2.Visible = false;
                 pictureBox3.Visible = false;
                 toCompleteLineLol.BringToFront();
-                if (File.Exists(facepath))
-                {
-                    faces = false;
-                }
                 oldXYPos = this.Location.Y + this.Location.X;
                 this.KeyPreview = true;
                 this.KeyDown += new KeyEventHandler(Start_KeyDown);
                 try
                 {
-                    string r = File.ReadAllText(mystuff + @"\userSettings.json");
-                    var jsonOfInfo = UserSettings.FromJson(r);
-                    foreach (var response in jsonOfInfo.Info)
-                    {
-                        if (response.Faces == "y")
-                        {
-                            faces = false;
-                            UpdateExpresion(1);
-                        }
-                        else
-                            faces = true;   // this isnt really needed but whatev
 
-                        if (response.DefultDlPath != null)
-                            dirToStore = response.DefultDlPath.ToString();
+                    string settingText = File.ReadAllText(userInfo);
+                    // load user settings
+                    if (!File.Exists(userInfo))
+                    {
+                        string[] infoHold = settingText.Split("\n"[0]);
+                        string[] infoSplit;
+                        infoSplit = Regex.Split(infoHold[0], @"\|");
+                        if (infoSplit[0] != "")
+                        {
+                            MessageBox.Show(
+               "\nAutoUpdate:" + infoSplit[0] +
+               "\nAutoUpdateDependencies:" + infoSplit[1] +
+               "\nFaces:" + infoSplit[2] +
+               "\nFinnishedDLFolderDialog:" + infoSplit[3] +
+               "\nDefultDlPath:" + infoSplit[4] +
+               "\nSendUsername:" + infoSplit[5] +
+               "\nSendLocalDate/Time:" + infoSplit[6]);
+                        }
+
+                        File.WriteAllText(userInfo, "Hello and Welcome" + Environment.NewLine, Encoding.UTF8);
                     }
                 }
                 catch (Exception h)
                 {
                     MessageBox.Show("Somthing is wrong with your user settings" + Environment.NewLine + "If you changed something you might want to check it" + Environment.NewLine + "If not, click ok and I'll fix it for you", "What is going on in here?", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    var jsonObject = new JObject
-                    {
-                    { "Created", DateTime.Now }
-                    };
 
-                    dynamic saved = jsonObject;
-
-                    saved.info = new JArray() as dynamic;
-
-                    dynamic infomation = new JObject();
-                    infomation = new JObject();
-                    infomation.jamdlAutoU = "y";
-                    infomation.depAutoU = "y";
-                    infomation.faces = "n";
-                    infomation.finnishedFolderDialog = "y";
-                    infomation.DefultDlPath = "";
-                    saved.emulators.Add(infomation);
-                    File.WriteAllText(mystuff + @"\userSettings.json", jsonObject.ToString());
+                    // create user settings cause its broken
+                    File.WriteAllText(userInfo, "y|y|y|y|null|y|y" + Environment.NewLine + "Created at: " + DateTime.Now, Encoding.UTF8);
                 }
-                checkJson.Enabled = true;
             }
         }
 
         private void Start_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode.ToString() == "F1" && helpIsOpen == false)
+            {
+                showHelpdesk();
+            }
             if (e.KeyCode.ToString() == "F1" && helpIsOpen == false)
             {
                 F1 helpDesk = new F1();
@@ -822,11 +781,48 @@ namespace MediaDL
             }
         }
 
+        private void panel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void showWarning(string lazySwitch, string main, string paragraph, string button1Text = "Yes", string button2Text = "No")
+        {
+
+
+            agreeButton.Text = button1Text;
+            disButton.Text = button2Text;
+            /*
+                        lazyPrograming = lazySwitch;*/
+            label11.Text = main;
+            richTextBox2.Text = paragraph;
+        }
+
+        void showMessage(bool isTure)
+        {
+            panel2.BringToFront();
+            panel8.Visible = isTure;
+            label9.Visible = isTure;
+            pictureBox7.Visible = !isTure;
+        }
+
+        void showHelpdesk()
+        {
+            helpIsOpen = true;
+            F1 helpDesk = new F1();
+            helpDesk.ShowDialog();
+            helpdeskClose();
+        }
+
+        void helpdeskClose()
+        {
+            helpIsOpen = false;
+
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
-            F1 helpDesk = new F1();
-            helpDesk.Show();
-            helpIsOpen = true;
+            showHelpdesk();
         }
     }
 }

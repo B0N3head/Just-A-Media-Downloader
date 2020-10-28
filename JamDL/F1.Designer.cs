@@ -62,6 +62,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.button10 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -83,6 +84,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -180,6 +182,7 @@
             this.checkBox3.TabIndex = 113;
             this.checkBox3.Text = "Remove the supid faces n\' stuff";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             this.checkBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.checkBox3_MouseDown);
             // 
             // checkBox2
@@ -230,12 +233,14 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = global::JAMDL.Properties.Resources.h1;
             this.pictureBox1.Location = new System.Drawing.Point(25, 11);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(509, 133);
             this.pictureBox1.TabIndex = 100;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.HowWork_Click);
             // 
             // label6
             // 
@@ -244,9 +249,9 @@
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
             this.label6.Location = new System.Drawing.Point(27, 223);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(123, 13);
+            this.label6.Size = new System.Drawing.Size(120, 13);
             this.label6.TabIndex = 117;
-            this.label6.Text = "Oh look some buttons";
+            this.label6.Text = "Some helpful buttons";
             // 
             // panel3
             // 
@@ -340,11 +345,11 @@
             this.MainHelpPanel.Controls.Add(this.label1);
             this.MainHelpPanel.Controls.Add(this.label6);
             this.MainHelpPanel.Controls.Add(this.panel3);
-            this.MainHelpPanel.Location = new System.Drawing.Point(305, 0);
+            this.MainHelpPanel.Location = new System.Drawing.Point(325, 0);
             this.MainHelpPanel.Name = "MainHelpPanel";
             this.MainHelpPanel.Size = new System.Drawing.Size(593, 339);
             this.MainHelpPanel.TabIndex = 120;
-            this.MainHelpPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainHelpPanel_MouseDown);
+            this.MainHelpPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainsettingsPanel_MouseDown);
             // 
             // MainsettingsPanel
             // 
@@ -502,6 +507,8 @@
             // panel7
             // 
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.label15);
+            this.panel7.Controls.Add(this.checkBox10);
             this.panel7.Controls.Add(this.button10);
             this.panel7.Controls.Add(this.button8);
             this.panel7.Controls.Add(this.label8);
@@ -514,6 +521,18 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(564, 152);
             this.panel7.TabIndex = 118;
+            // 
+            // checkBox10
+            // 
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
+            this.checkBox10.ForeColor = System.Drawing.Color.White;
+            this.checkBox10.Location = new System.Drawing.Point(198, 118);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(165, 17);
+            this.checkBox10.TabIndex = 121;
+            this.checkBox10.Text = "Share PC Name With Server";
+            this.checkBox10.UseVisualStyleBackColor = true;
             // 
             // button10
             // 
@@ -537,9 +556,9 @@
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button8.Font = new System.Drawing.Font("Leelawadee UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.button8.Location = new System.Drawing.Point(499, 74);
+            this.button8.Location = new System.Drawing.Point(495, 74);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(60, 25);
+            this.button8.Size = new System.Drawing.Size(60, 23);
             this.button8.TabIndex = 120;
             this.button8.Text = "Browse";
             this.button8.UseVisualStyleBackColor = false;
@@ -608,9 +627,9 @@
             this.checkBox7.ForeColor = System.Drawing.Color.White;
             this.checkBox7.Location = new System.Drawing.Point(218, 34);
             this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(275, 17);
+            this.checkBox7.Size = new System.Drawing.Size(250, 17);
             this.checkBox7.TabIndex = 3;
-            this.checkBox7.Text = "Open folder dialog when finished downloading";
+            this.checkBox7.Text = "Open explorer when finished downloading";
             this.checkBox7.UseVisualStyleBackColor = true;
             // 
             // panel5
@@ -770,7 +789,7 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(89, 52);
             this.panel6.TabIndex = 0;
-            this.panel6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel6_MouseDown);
+            this.panel6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainsettingsPanel_MouseDown);
             // 
             // label2
             // 
@@ -782,7 +801,18 @@
             this.label2.Size = new System.Drawing.Size(83, 30);
             this.label2.TabIndex = 121;
             this.label2.Text = "JAMDL";
-            this.label2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label2_MouseDown);
+            this.label2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainsettingsPanel_MouseDown);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(375, 119);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(167, 13);
+            this.label15.TabIndex = 122;
+            this.label15.Text = "PC Name: Bonehead Bonehead";
             // 
             // F1
             // 
@@ -879,5 +909,7 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.CheckBox checkBox9;
         private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.Label label15;
     }
 }

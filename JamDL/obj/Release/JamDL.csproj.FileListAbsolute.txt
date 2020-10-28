@@ -1,0 +1,28 @@
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\bin\Release\JAMDL.exe.config
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\bin\Release\JAMDL.exe
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\bin\Release\JAMDL.pdb
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\bin\Release\Microsoft.Rest.ClientRuntime.dll
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\bin\Release\Newtonsoft.Json.dll
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\bin\Release\Newtonsoft.Json.xml
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\JamDL.csprojAssemblyReference.cache
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\MediaDL.F1.resources
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\JAMDL.Properties.Resources.resources
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\MediaDL.theDL.resources
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\MediaDL.Start.resources
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\JamDL.csproj.GenerateResource.cache
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\JamDL.csproj.CoreCompileInputs.cache
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\JamDL.csproj.CopyComplete
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\JAMDL.exe
+C:\Users\Liam Collins\Pictures\JAMDL\JamDL\obj\Release\JAMDL.pdb
+E:\JAMDL\JamDL\bin\Release\JAMDL.exe.config
+E:\JAMDL\JamDL\bin\Release\JAMDL.exe
+E:\JAMDL\JamDL\bin\Release\JAMDL.pdb
+E:\JAMDL\JamDL\obj\Release\JamDL.csprojAssemblyReference.cache
+E:\JAMDL\JamDL\obj\Release\MediaDL.F1.resources
+E:\JAMDL\JamDL\obj\Release\JAMDL.Properties.Resources.resources
+E:\JAMDL\JamDL\obj\Release\MediaDL.theDL.resources
+E:\JAMDL\JamDL\obj\Release\MediaDL.Start.resources
+E:\JAMDL\JamDL\obj\Release\JamDL.csproj.GenerateResource.cache
+E:\JAMDL\JamDL\obj\Release\JamDL.csproj.CoreCompileInputs.cache
+E:\JAMDL\JamDL\obj\Release\JAMDL.exe
+E:\JAMDL\JamDL\obj\Release\JAMDL.pdb

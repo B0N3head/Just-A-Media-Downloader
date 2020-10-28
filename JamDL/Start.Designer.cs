@@ -49,26 +49,34 @@
             this.faceChange = new System.Windows.Forms.Timer(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.disButton = new System.Windows.Forms.Button();
+            this.agreeButton = new System.Windows.Forms.Button();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.toCompleteLineLol = new System.Windows.Forms.Panel();
             this.checkJson = new System.Windows.Forms.Timer(this.components);
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
@@ -310,7 +318,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.pictureBox4);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.pictureBox6);
@@ -319,21 +326,6 @@
             this.panel1.Size = new System.Drawing.Size(506, 33);
             this.panel1.TabIndex = 14;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseDown_1);
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(60)))), ((int)(((byte)(68)))));
-            this.button4.FlatAppearance.BorderSize = 0;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Leelawadee UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.button4.Location = new System.Drawing.Point(442, 4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(53, 25);
-            this.button4.TabIndex = 119;
-            this.button4.Text = "Help";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // pictureBox4
             // 
@@ -372,12 +364,114 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.panel8);
+            this.panel2.Controls.Add(this.pictureBox7);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(675, 236);
             this.panel2.TabIndex = 118;
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseDown_1);
             this.panel2.MouseLeave += new System.EventHandler(this.panel2_MouseLeave);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Leelawadee UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label9.Location = new System.Drawing.Point(141, 36);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(121, 15);
+            this.label9.TabIndex = 48;
+            this.label9.Text = "Before you continue";
+            this.label9.Visible = false;
+            // 
+            // panel8
+            // 
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel8.Controls.Add(this.disButton);
+            this.panel8.Controls.Add(this.agreeButton);
+            this.panel8.Controls.Add(this.richTextBox2);
+            this.panel8.Controls.Add(this.label11);
+            this.panel8.Location = new System.Drawing.Point(139, 44);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(394, 155);
+            this.panel8.TabIndex = 47;
+            this.panel8.Visible = false;
+            this.panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.panel8_Paint);
+            // 
+            // disButton
+            // 
+            this.disButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(62)))), ((int)(((byte)(70)))));
+            this.disButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(37)))), ((int)(((byte)(137)))));
+            this.disButton.FlatAppearance.BorderSize = 0;
+            this.disButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.disButton.Font = new System.Drawing.Font("Leelawadee UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.disButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.disButton.Location = new System.Drawing.Point(198, 119);
+            this.disButton.Name = "disButton";
+            this.disButton.Size = new System.Drawing.Size(175, 25);
+            this.disButton.TabIndex = 49;
+            this.disButton.Text = "Fuck No, Plz Go Back";
+            this.disButton.UseVisualStyleBackColor = false;
+            // 
+            // agreeButton
+            // 
+            this.agreeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(62)))), ((int)(((byte)(70)))));
+            this.agreeButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(37)))), ((int)(((byte)(137)))));
+            this.agreeButton.FlatAppearance.BorderSize = 0;
+            this.agreeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.agreeButton.Font = new System.Drawing.Font("Leelawadee UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.agreeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.agreeButton.Location = new System.Drawing.Point(12, 119);
+            this.agreeButton.Name = "agreeButton";
+            this.agreeButton.Size = new System.Drawing.Size(175, 25);
+            this.agreeButton.TabIndex = 42;
+            this.agreeButton.Text = "I Understand and Agree";
+            this.agreeButton.UseVisualStyleBackColor = false;
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(40)))), ((int)(((byte)(49)))));
+            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox2.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.richTextBox2.DetectUrls = false;
+            this.richTextBox2.Font = new System.Drawing.Font("Leelawadee UI", 9F);
+            this.richTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.richTextBox2.Location = new System.Drawing.Point(12, 40);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.ReadOnly = true;
+            this.richTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.richTextBox2.ShortcutsEnabled = false;
+            this.richTextBox2.Size = new System.Drawing.Size(361, 76);
+            this.richTextBox2.TabIndex = 48;
+            this.richTextBox2.TabStop = false;
+            this.richTextBox2.Text = "By clicking I understand you agree with allowing damaging scripts to run on this " +
+    "pc AND understand that you alone are fully responsible for any damages caused to" +
+    " this pc";
+            // 
+            // label11
+            // 
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Leelawadee UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label11.Location = new System.Drawing.Point(9, 13);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(364, 15);
+            this.label11.TabIndex = 45;
+            this.label11.Text = "aaa";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(60)))), ((int)(((byte)(68)))));
+            this.pictureBox7.Location = new System.Drawing.Point(511, 5);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(151, 26);
+            this.pictureBox7.TabIndex = 16;
+            this.pictureBox7.TabStop = false;
+            this.pictureBox7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseDown_1);
             // 
             // pictureBox3
             // 
@@ -410,16 +504,6 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseDown_1);
             // 
-            // pictureBox7
-            // 
-            this.pictureBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(60)))), ((int)(((byte)(68)))));
-            this.pictureBox7.Location = new System.Drawing.Point(511, 6);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(151, 26);
-            this.pictureBox7.TabIndex = 16;
-            this.pictureBox7.TabStop = false;
-            this.pictureBox7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseDown_1);
-            // 
             // pictureBox5
             // 
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -442,12 +526,28 @@
             this.checkJson.Interval = 500;
             this.checkJson.Tick += new System.EventHandler(this.checkJson_Tick);
             // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(62)))), ((int)(((byte)(70)))));
+            this.button5.FlatAppearance.BorderSize = 0;
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button5.Font = new System.Drawing.Font("Leelawadee UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.button5.Location = new System.Drawing.Point(550, 7);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(60, 25);
+            this.button5.TabIndex = 119;
+            this.button5.Text = "Help";
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Start
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(40)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(675, 236);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.toCompleteLineLol);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.panel1);
@@ -470,7 +570,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.pictureBox7);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -486,10 +585,13 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -526,8 +628,14 @@
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Panel toCompleteLineLol;
         private System.Windows.Forms.Timer checkJson;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button disButton;
+        private System.Windows.Forms.Button agreeButton;
+        private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.Label label11;
     }
 }

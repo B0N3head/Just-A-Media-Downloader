@@ -69,7 +69,6 @@
             this.label5.Size = new System.Drawing.Size(237, 25);
             this.label5.TabIndex = 97;
             this.label5.Text = "Just a Media Downloader";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // pictureBox1
             // 
