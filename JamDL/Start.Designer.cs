@@ -191,8 +191,8 @@
             this.comboBox1.Items.AddRange(new object[] {
             "aac",
             "flac",
-            "mp3",
             "m4a",
+            "mp3",
             "opus",
             "vorbis",
             "wav"});
@@ -413,7 +413,7 @@
             this.disButton.Name = "disButton";
             this.disButton.Size = new System.Drawing.Size(175, 25);
             this.disButton.TabIndex = 49;
-            this.disButton.Text = "Fuck No, Plz Go Back";
+            this.disButton.Text = "No";
             this.disButton.UseVisualStyleBackColor = false;
             // 
             // agreeButton
@@ -428,8 +428,9 @@
             this.agreeButton.Name = "agreeButton";
             this.agreeButton.Size = new System.Drawing.Size(175, 25);
             this.agreeButton.TabIndex = 42;
-            this.agreeButton.Text = "I Understand and Agree";
+            this.agreeButton.Text = "yES";
             this.agreeButton.UseVisualStyleBackColor = false;
+            this.agreeButton.Click += new System.EventHandler(this.agreeButton_Click);
             // 
             // richTextBox2
             // 
@@ -447,9 +448,7 @@
             this.richTextBox2.Size = new System.Drawing.Size(361, 76);
             this.richTextBox2.TabIndex = 48;
             this.richTextBox2.TabStop = false;
-            this.richTextBox2.Text = "By clicking I understand you agree with allowing damaging scripts to run on this " +
-    "pc AND understand that you alone are fully responsible for any damages caused to" +
-    " this pc";
+            this.richTextBox2.Text = "filler";
             // 
             // label11
             // 
@@ -547,6 +546,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(40)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(675, 236);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.toCompleteLineLol);
             this.Controls.Add(this.label4);
@@ -570,7 +570,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Start";

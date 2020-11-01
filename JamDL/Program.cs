@@ -1,5 +1,7 @@
-﻿using System;
+﻿using JAMDL;
+using System;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace MediaDL
 {
@@ -13,7 +15,7 @@ namespace MediaDL
        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Start());
+            Application.Run(new ThemeCreator());
         }
     }
 }

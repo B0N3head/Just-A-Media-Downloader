@@ -689,6 +689,11 @@ namespace MediaDL
             childForm.Show();
         }
 
+        private void agreeButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
         string userInfo = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\userInfo";
         private void Start_Load(object sender, EventArgs e)
         {
