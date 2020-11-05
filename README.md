@@ -1,8 +1,11 @@
 # Just A Media Downloader
-Download youtube, vimeo, phub and much more in almost any format, audio or video.
 
+>Not containing any youtbe-dl code since June 2020
+
+Download anything from youtube, vimeo, phub and much more in almost any format, audio or video.
 
 [Supported sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)
+
 
 ## Roadmap
  - ### Functionality
@@ -12,7 +15,7 @@ Download youtube, vimeo, phub and much more in almost any format, audio or video
 		- [x] Download from multiple links at once
 		- [x] Download latest yt-dl.exe
 		- [ ] Remove link info at end of file
-		- [ ] Check integrity of file
+		- [ ] Check integrity of file (downloaded media files)
 	- Youtube-dl
 		- [x] Download latest ffmpeg.exe
 	- Dependencies
@@ -32,18 +35,19 @@ Download youtube, vimeo, phub and much more in almost any format, audio or video
  - ### GUI
 	- Simple and functional GUI
 		- [X] Save dialog
-		- [X] Load user settings from json
+		- [X] Load user settings from file
 		- [X] Custom default directory to save to
 		- [X] Save folder dialog
-		- [X] Show youtube-dl downloading
+		- [X] Show youtube-dl while downloading
 		  - [ ] Block user input
 		- [X] Chose audio/video ouput type
 		- [X] Download subs option 
-		- [X] Sound quality option 
+		- [X] Quality option 
  		- [X] Exit dialog (if still downloading)
 	- Themes
   		- [ ] Custom layouts
 		- [ ] Custom faces
+		- [ ] Custom colours
 		- [ ] Load Colour info from json
 		- [ ] Edit existing theme in program
 		- [ ] Export current edited theme
