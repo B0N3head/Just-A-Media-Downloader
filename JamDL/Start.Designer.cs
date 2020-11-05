@@ -399,7 +399,6 @@
             this.panel8.Size = new System.Drawing.Size(394, 155);
             this.panel8.TabIndex = 47;
             this.panel8.Visible = false;
-            this.panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.panel8_Paint);
             // 
             // disButton
             // 
@@ -415,6 +414,7 @@
             this.disButton.TabIndex = 49;
             this.disButton.Text = "No";
             this.disButton.UseVisualStyleBackColor = false;
+            this.disButton.Click += new System.EventHandler(this.disButton_Click);
             // 
             // agreeButton
             // 
@@ -546,7 +546,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(40)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(675, 236);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.toCompleteLineLol);
             this.Controls.Add(this.label4);
@@ -570,6 +569,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Start";

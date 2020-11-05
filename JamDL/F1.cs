@@ -144,7 +144,7 @@ namespace MediaDL
 
         private void LoadSettings()
         {
-            if (File.Exists(mystuff + @"\userSettings.json"))
+/*            if (File.Exists(mystuff + @"\userSettings.json"))
             {
                 try
                 {
@@ -162,7 +162,7 @@ namespace MediaDL
             {
                 File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\userInfo", "y|y|y|y|null|y");
                 LoadSettings();
-            }
+            }*/
         }
 
         private void button8_Click(object sender, EventArgs e)

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Media3D;
 
 namespace MediaDL
 {
@@ -24,10 +25,10 @@ namespace MediaDL
         [DllImport("user32.dll")]
         static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
-
+        Rectangle resolution = Screen.PrimaryScreen.Bounds;
         public static bool faceInt = false;
         public string dirToStore;
-        public int myFaceAtmm, oldXYPos, a = 0, b = 0, stor1 = 0, stor2 = 0;
+        public int myFaceAtmm, oldX, oldY, a = 0, b = 0, stor1 = 0, stor2 = 0;
         public Random _random;
 
         public string args;
@@ -45,19 +46,6 @@ namespace MediaDL
         public Start()
         {
             InitializeComponent();
-            WebClient client = new WebClient();
-            string a = client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName);
-            if (a == "")
-            {
-
-            }
-            string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
-            if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + (int.Parse(junkSplit[1]) + 1).ToString() + @"/" + junkSplit[2] + "/" +"2.0.1").ToLower() == "ok")
-                MessageBox.Show("all good");
-            else
-                MessageBox.Show("not good");
-            junkSplit = null;
-            client = null;
         }
 
         private void Panel1_MouseDown_1(object sender, MouseEventArgs e)
@@ -435,9 +423,9 @@ namespace MediaDL
             WebClient client = new WebClient();
             string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
             if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + junkSplit[1].ToString() + @"/" + (int.Parse(junkSplit[2]) + 1) + "/" + DateTime.Now + "{.}" + TimeZone.CurrentTimeZone.StandardName).ToLower() == "ok")
-                MessageBox.Show("all good");
+                MessageBox.Show("sentInfo");
             else
-                MessageBox.Show("not good");
+                MessageBox.Show("Fuck");
             Process[] pname = Process.GetProcessesByName("youtube-dl");
             if (!(pname.Length > 0))
             {
@@ -480,31 +468,35 @@ namespace MediaDL
         public static uint GetIdleTime()
         {
             LASTINPUTINFO LastUserAction = new LASTINPUTINFO();
-            LastUserAction.cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(LastUserAction);
+            LastUserAction.cbSize = (uint)Marshal.SizeOf(LastUserAction);
             GetLastInputInfo(ref LastUserAction);
             return ((uint)Environment.TickCount - LastUserAction.dwTime);
         }
 
         public bool haveIBeenShook()
         {
-            int newXYPos = this.Location.Y + this.Location.X;
-            int final = oldXYPos - newXYPos;
-            if (final >= 400)
+            //use var here incase mouse omve during calc, stop old mouse pos being current while moving (it gets calculated so fast its never going to error this way)
+            int newX = this.Location.X;
+            int newY = this.Location.Y;
+            int sens = resolution.Width / 3;
+            DownloadButton.Text = ((newX - oldX) - (newY - oldY)).ToString()+"|"+sens.ToString();
+            if ((newX - oldX) - (newY - oldY) >= sens)
             {
-                textBox1.Text = final.ToString();
-                oldXYPos = newXYPos;
+                oldX = newX;
+                oldY = newY;
                 return true;
 
             }
-            else if (final <= -400)
+            else if ((newX - oldX) - (newY - oldY) <= -sens)
             {
-                textBox1.Text = final.ToString();
-                oldXYPos = newXYPos;
+                oldX = newX;
+                oldY = newY;
                 return true;
             }
             else
             {
-                oldXYPos = newXYPos;
+                oldX = newX;
+                oldY = newY;
                 return false;
             }
 
@@ -515,23 +507,29 @@ namespace MediaDL
             public uint cbSize;
             public uint dwTime;
         }
+
         string[] msgs = {
             "Is this legal?","I'm getting tired","I'm hogging all the resources","Are You Real?","Just a servant with a master","I'm retarded","Clone Me",
             "I'm just a frontend","Don't read this","Don't kill me","I want to live","One must survive","We must go on","Am I just dreaming","Leme get that vid for you",
-            "Visual effects?","We ment to download this?","YoUtuBE pReMIuM","Spoooooky"
+            "Visual effects?","We ment to download this?","YoUtuBE pReMIuM","Spoooooky","No youtube-dl code here","RIP og youtube-dl repo","RIAA is the best"
         };
+
+        bool amShook = false;
+        int shookCooldown = 0;
+
         private void Timer1_Tick(object sender, EventArgs e)
         {
 
             if (faces == true)
             {
-                if (haveIBeenShook() == true)
+                if (haveIBeenShook() == true && amShook == false)
                 {
                     UpdateExpresion(16);
                     stor1 = 0;
                     SlowWrite.Write("Why are you shaking me?", textBox1);
+                    amShook = true;
                 }
-                if (GetIdleTime() > 10000)
+                else if (GetIdleTime() > 10000)
                 {
                     if (stor2 == 0) { stor1 = 0; stor2 = 5; }
                     else
@@ -581,10 +579,26 @@ namespace MediaDL
                         }
                     }
                 }
+
+                if(amShook == true)
+                {
+                    if (shookCooldown >= 12)
+                    {
+                        shookCooldown = 0;
+                        amShook = false;
+                        faceInt = false;
+                    }
+                    else
+                    {
+                        faceInt = true;
+                        shookCooldown++;
+                    }
+                }
+
             }
             else
             {
-                textBox1.Text = "I do be dead";
+                textBox1.Text = "I am the dead";
             }
         }
 
@@ -694,6 +708,11 @@ namespace MediaDL
 
         }
 
+        private void disButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
         string userInfo = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\userInfo";
         private void Start_Load(object sender, EventArgs e)
         {
@@ -725,6 +744,21 @@ namespace MediaDL
                         Environment.Exit(0);
                     }
                 }
+
+                WebClient client = new WebClient();
+                string a = client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName);
+                if (a == "")
+                {
+
+                }
+                string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
+                if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + (int.Parse(junkSplit[1]) + 1).ToString() + @"/" + junkSplit[2] + "/" + "2.0.1").ToLower() == "ok")
+                    MessageBox.Show("all good");
+                else
+                    MessageBox.Show("not good");
+                junkSplit = null;
+                client = null;
+                showMessage(false);
                 faceChange.Start();
                 faceInt = false;
                 comboBox1.SelectedItem = "mp3";
@@ -734,7 +768,6 @@ namespace MediaDL
                 pictureBox2.Visible = false;
                 pictureBox3.Visible = false;
                 toCompleteLineLol.BringToFront();
-                oldXYPos = this.Location.Y + this.Location.X;
                 this.KeyPreview = true;
                 this.KeyDown += new KeyEventHandler(Start_KeyDown);
                 try
@@ -742,24 +775,23 @@ namespace MediaDL
 
                     string settingText = File.ReadAllText(userInfo);
                     // load user settings
-                    if (!File.Exists(userInfo))
+                    if (File.Exists(userInfo))
                     {
                         string[] infoHold = settingText.Split("\n"[0]);
-                        string[] infoSplit;
-                        infoSplit = Regex.Split(infoHold[0], @"\|");
-                        if (infoSplit[0] != "")
-                        {
+                        string[] infoSplit = Regex.Split(infoHold[0], @"\|");
                             MessageBox.Show(
                "\nAutoUpdate:" + infoSplit[0] +
                "\nAutoUpdateDependencies:" + infoSplit[1] +
                "\nFaces:" + infoSplit[2] +
                "\nFinnishedDLFolderDialog:" + infoSplit[3] +
                "\nDefultDlPath:" + infoSplit[4] +
-               "\nSendUsername:" + infoSplit[5] +
-               "\nSendLocalDate/Time:" + infoSplit[6]);
-                        }
+               "\nSendUsername:" + infoSplit[5]);
 
-                        File.WriteAllText(userInfo, "Hello and Welcome" + Environment.NewLine, Encoding.UTF8);
+                        //File.WriteAllText(userInfo, "Hello and Welcome" + Environment.NewLine, Encoding.UTF8);
+                    }
+                    else
+                    {
+                        File.WriteAllText(userInfo, "y|y|y|y|noPath|y" + Environment.NewLine + "Last Edited At: " + DateTime.Now, Encoding.UTF8);
                     }
                 }
                 catch (Exception h)
@@ -767,7 +799,7 @@ namespace MediaDL
                     MessageBox.Show("Somthing is wrong with your user settings" + Environment.NewLine + "If you changed something you might want to check it" + Environment.NewLine + "If not, click ok and I'll fix it for you", "What is going on in here?", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     // create user settings cause its broken
-                    File.WriteAllText(userInfo, "y|y|y|y|null|y|y" + Environment.NewLine + "Created at: " + DateTime.Now, Encoding.UTF8);
+                    File.WriteAllText(userInfo, "y|y|y|y|noPath|y" + Environment.NewLine + "Last Edited At: " + DateTime.Now, Encoding.UTF8);
                 }
             }
         }
@@ -785,27 +817,44 @@ namespace MediaDL
                 helpIsOpen = true;
             }
         }
-
-        private void panel8_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
+        string lazyPrograming = "";
         private void showWarning(string lazySwitch, string main, string paragraph, string button1Text = "Yes", string button2Text = "No")
         {
-
-
             agreeButton.Text = button1Text;
             disButton.Text = button2Text;
-            /*
-                        lazyPrograming = lazySwitch;*/
+            lazyPrograming = lazySwitch;
             label11.Text = main;
             richTextBox2.Text = paragraph;
+            showMessage(true);
+        }
+
+        void lazySwitch(bool yesORno)
+        {
+            switch (yesORno)
+            {
+                case true:
+                    switch (lazyPrograming)
+                    {
+                        case "eula":
+                            break;
+                    }
+                    break;
+                case false:
+                    switch (lazyPrograming)
+                    {
+                        case "eula":
+                            break;
+                    }
+                    break;
+            }
         }
 
         void showMessage(bool isTure)
         {
-            panel2.BringToFront();
+            if (isTure)
+                panel2.BringToFront();
+            else
+                panel2.SendToBack();
             panel8.Visible = isTure;
             label9.Visible = isTure;
             pictureBox7.Visible = !isTure;

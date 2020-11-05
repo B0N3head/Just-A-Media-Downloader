@@ -15,7 +15,7 @@ namespace MediaDL
        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ThemeCreator());
+            Application.Run(new Start());
         }
     }
 }

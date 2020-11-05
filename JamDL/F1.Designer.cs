@@ -62,6 +62,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.button10 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -84,7 +85,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -522,6 +522,17 @@
             this.panel7.Size = new System.Drawing.Size(564, 152);
             this.panel7.TabIndex = 118;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(375, 119);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(167, 13);
+            this.label15.TabIndex = 122;
+            this.label15.Text = "PC Name: Bonehead Bonehead";
+            // 
             // checkBox10
             // 
             this.checkBox10.AutoSize = true;
@@ -802,17 +813,6 @@
             this.label2.TabIndex = 121;
             this.label2.Text = "JAMDL";
             this.label2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainsettingsPanel_MouseDown);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(375, 119);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(167, 13);
-            this.label15.TabIndex = 122;
-            this.label15.Text = "PC Name: Bonehead Bonehead";
             // 
             // F1
             // 
