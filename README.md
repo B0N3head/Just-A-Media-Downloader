@@ -1,4 +1,6 @@
-# Just A Media Downloader
+# Just A Media Downloader (JamDL)
+
+<img align="left" width="110" height="110" src="https://raw.githubusercontent.com/B0N3head/Just-A-Media-Downloader/master/JamDL/Resources/cry.png">
 
 >Not containing any youtbe-dl code since June 2020
 
@@ -9,6 +11,9 @@ Download anything from youtube, vimeo, phub and much more in almost any format, 
 
 ## Roadmap
  - ### Functionality
+      
+      <img align="right" width="150" height="150" src="https://raw.githubusercontent.com/B0N3head/Just-A-Media-Downloader/master/JamDL/Resources/bored.png">
+      
 	- Youtube-dl
 		- [x] Download video/audio
 		- [x] Save video/audio to folder
@@ -23,8 +28,11 @@ Download anything from youtube, vimeo, phub and much more in almost any format, 
 		- [x] Redownload if hash is not correct
 		- [ ] Handbake cli for faster recoding
 		- [ ] Auto update dependencies 
+    
+      <img align="right" width="150" height="150" src="https://raw.githubusercontent.com/B0N3head/Just-A-Media-Downloader/master/JamDL/Resources/nutral.png">
+      
 	- Other Stuff
-		- [x] Disable faces/messages
+ 		- [x] Disable faces/messages
 		- [x] Change faces depending on user actions
 		- [x] Random text below face
 		- [x] Auto next line when user paste link
@@ -32,6 +40,7 @@ Download anything from youtube, vimeo, phub and much more in almost any format, 
 		- [x] Detect user error (non link trying being downloaded)
 		- [x] [Whole website](https://bonehead.xyz/jamdl.html)
 		- [x] Only one instance of JamDL can be running at once check (stop crashing)
+    
  - ### GUI
 	- Simple and functional GUI
 		- [X] Save dialog
@@ -44,6 +53,9 @@ Download anything from youtube, vimeo, phub and much more in almost any format, 
 		- [X] Download subs option 
 		- [X] Quality option 
  		- [X] Exit dialog (if still downloading)
+    
+ 		 <img align="right" width="150" height="150" src="https://raw.githubusercontent.com/B0N3head/Just-A-Media-Downloader/master/JamDL/Resources/excited.png">
+     
 	- Themes
   		- [ ] Custom layouts
 		- [ ] Custom faces
