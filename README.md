@@ -18,11 +18,11 @@ Download anything from youtube, vimeo, phub and much more in almost any format, 
 		- [x] Download video/audio
 		- [x] Save video/audio to folder
 		- [x] Download from multiple links at once
-		- [x] Download latest yt-dl.exe
-		- [ ] Remove link info at end of file
-		- [ ] Check integrity of file (downloaded media files)
-	- Youtube-dl
 		- [x] Download latest ffmpeg.exe
+		- [x] Download latest yt-dl.exe
+		- [ ] Remove link info at end of file (Correctly title the media)
+		- [ ] Add mp3 art according to video thumbnail
+		- [ ] Check integrity of file (downloaded media files)
 	- Dependencies
 		- [x] Download dependencies from url
 		- [x] Redownload if hash is not correct
@@ -40,6 +40,8 @@ Download anything from youtube, vimeo, phub and much more in almost any format, 
 		- [x] Detect user error (non link trying being downloaded)
 		- [x] [Whole website](https://bonehead.xyz/jamdl.html)
 		- [x] Only one instance of JamDL can be running at once check (stop crashing)
+		- [ ] Get name of downloaded video
+		- [ ] Get thumbnail of downloaded video
     
  - ### GUI
 	- Simple and functional GUI
