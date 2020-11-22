@@ -195,5 +195,10 @@ namespace MediaDL
         {
             checkBox6.Checked = !checkBox3.Checked;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -34,11 +34,13 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\JAMDL  Builds\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -200,7 +202,6 @@
     <Compile Include="ThemeCreator.Designer.cs">
       <DependentUpon>ThemeCreator.cs</DependentUpon>
     </Compile>
-    <Compile Include="tools\dumb.cs" />
     <Compile Include="F1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +222,7 @@
     <Compile Include="Start.Designer.cs">
       <DependentUpon>Start.cs</DependentUpon>
     </Compile>
+    <Compile Include="tools\tools.cs" />
     <EmbeddedResource Include="F1.resx">
       <DependentUpon>F1.cs</DependentUpon>
     </EmbeddedResource>

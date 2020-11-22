@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -12,16 +11,10 @@ namespace MediaDL
 {
     public partial class theDL : Form
     {
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-
         string mystuff = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + "\\JAMDL";
         string logpath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + "\\JAMDL\\log.txt";
 
         string ytdl = "http://abf-downloads.openmandriva.org/ytdl/youtube-dl.exe";
-        string ytdlVersion = "https://yt-dl.org/downloads/latest/youtube-dl.exe";
         string ffmpeg = "https://github.com/marierose147/ffmpeg_windows_exe_with_fdk_aac/releases/latest";
 
         public Start next = new Start();
@@ -38,15 +31,16 @@ namespace MediaDL
             {
                 if (Directory.Exists(mystuff))
                 {
-                    string[] paths = new string[] { mystuff + "\\ffmpeg.exe", mystuff + "\\youtube-dl.exe", logpath };
+
+                    //Try to kill any active youtube-dl's
+                    foreach (Process proc in Process.GetProcessesByName("youtube-dl")) { proc.Kill(); }
+
+                    string[] paths = new string[] { mystuff + "\\ffmpeg.exe", mystuff + "\\youtube-dl.exe", logpath, mystuff + "\\userInfo", };
                     foreach (string a in paths)
                     {
                         if (File.Exists(a))
                             File.Delete(a);
                     }
-
-                    //Try to kill any active youtube-dl's
-                    foreach (Process proc in Process.GetProcessesByName("youtube-dl")) { proc.Kill(); }
 
                     if (internet() == true)
                     {
@@ -139,7 +133,9 @@ namespace MediaDL
 
                 System.Threading.Thread.Sleep(100);
                 LogDat("Creating settings file" + mystuff);
-                File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + "\\JAMDL\\userInfo", "y|y|y|y|noPath|y" + Environment.NewLine + "Last Edited At: " + DateTime.Now, Encoding.UTF8);
+                if (File.Exists(mystuff+"\\userInfo"))
+                    File.Delete(mystuff + "\\userInfo");
+                File.WriteAllText(mystuff + "\\userInfo", "y|y|y|y|noPath|y" + Environment.NewLine + "Last Edited At: " + DateTime.Now, Encoding.UTF8);
                 Application.Restart();
             }
             catch (Exception ex)
@@ -166,7 +162,7 @@ namespace MediaDL
 
             if (exception.ToLower().Contains("could not find a part of the path") || exception.ToLower().Contains("being used by another process"))
             {
-                MessageBox.Show("Please Close Any Logfiles Contained In The JAMDL Directory" + Environment.NewLine + "Then Press OK", "System.IO.__Error.WinIOError", MessageBoxButtons.OK);
+                MessageBox.Show("Please Close Any Logfiles Contained In The JAMDL Directory" + Environment.NewLine + "Then Press OK", " __Error.WinIOError", MessageBoxButtons.OK);
                 if (Directory.Exists(mystuff))
                     start();
             }

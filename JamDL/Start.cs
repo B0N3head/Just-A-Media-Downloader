@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JAMDL.tools;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -10,20 +11,15 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Media.Media3D;
 
 namespace MediaDL
 {
     public partial class Start : Form
     {
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImport("user32.dll")]
-        private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
-        [DllImport("user32.dll")]
-        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+        [DllImport("user32.dll")]  public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")] public static extern bool ReleaseCapture();
+        [DllImport("user32.dll")] private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+        [DllImport("user32.dll")] static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         Rectangle resolution = Screen.PrimaryScreen.Bounds;
         public static bool faceInt = false;
@@ -46,6 +42,7 @@ namespace MediaDL
         public Start()
         {
             InitializeComponent();
+            richTextBox1.EnableContextMenu();
         }
 
         private void Panel1_MouseDown_1(object sender, MouseEventArgs e)
@@ -389,6 +386,7 @@ namespace MediaDL
                             }
                             if (checkBox2.Checked == true)
                                 label5.Text = "Recoding Videos Can Take A While";
+                            textBox1.Visible = false;
                             StartDownload(args);
                             //check if user updated their path
                             doingShit = true;
@@ -420,15 +418,16 @@ namespace MediaDL
         public void weBeDone()
         {
 
-            WebClient client = new WebClient();
+/*            WebClient client = new WebClient();
             string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
             if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + junkSplit[1].ToString() + @"/" + (int.Parse(junkSplit[2]) + 1) + "/" + DateTime.Now + "{.}" + TimeZone.CurrentTimeZone.StandardName).ToLower() == "ok")
                 MessageBox.Show("sentInfo");
             else
-                MessageBox.Show("Fuck");
+                MessageBox.Show("Fuck");*/
             Process[] pname = Process.GetProcessesByName("youtube-dl");
             if (!(pname.Length > 0))
             {
+                textBox1.Visible = true;
                 doingShit = false;
                 faceInt = false;
                 panel3.Visible = false;
@@ -443,10 +442,28 @@ namespace MediaDL
             }
         }
 
-        private void button2_MouseEnter(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
-            UpdateExpresion(17);
+            CheckMouseLeave();
+            base.OnMouseLeave(e);
         }
+
+        private void CheckMouseLeave()
+        {
+            Point pt = PointToClient(Cursor.Position);
+
+            if (ClientRectangle.Contains(pt) == false)
+            {
+                OnMouseLeftFrom();
+            }
+        }
+
+        private void OnMouseLeftFrom()
+        {
+            MessageBox.Show("Mouse left the form");
+        }
+
+        private void button2_MouseEnter(object sender, EventArgs e) { UpdateExpresion(17); }
 
         public async Task StartDownload(string args)
         {
@@ -479,7 +496,6 @@ namespace MediaDL
             int newX = this.Location.X;
             int newY = this.Location.Y;
             int sens = resolution.Width / 3;
-            DownloadButton.Text = ((newX - oldX) - (newY - oldY)).ToString()+"|"+sens.ToString();
             if ((newX - oldX) - (newY - oldY) >= sens)
             {
                 oldX = newX;
@@ -580,7 +596,7 @@ namespace MediaDL
                     }
                 }
 
-                if(amShook == true)
+                if (amShook == true)
                 {
                     if (shookCooldown >= 12)
                     {
@@ -734,9 +750,9 @@ namespace MediaDL
             {
                 if (!File.Exists(eulaCheck))
                 {
-                    if (MessageBox.Show("By clicking yes you understand that this is just a gui for another program" + Environment.NewLine + "& this program is curently in development so expect changes" + Environment.NewLine + "This will only popup once", "Quick Read", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                    if (MessageBox.Show("By clicking yes you understand that this is just a gui for another program" + Environment.NewLine + "This program is curently in development so expect changes" + Environment.NewLine + "This will only popup once", "Quick Read", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                     {
-                        File.AppendAllText(eulaCheck, DateTime.Now.ToLongTimeString() + " Yes");
+                        File.AppendAllText(eulaCheck, "The user that owns the pc with the username " + Environment.UserName + " has agreed to the eula" + DateTime.Now.ToLongTimeString() + " Yes");
                     }
                     else
                     {
@@ -779,13 +795,13 @@ namespace MediaDL
                     {
                         string[] infoHold = settingText.Split("\n"[0]);
                         string[] infoSplit = Regex.Split(infoHold[0], @"\|");
-                            MessageBox.Show(
-               "\nAutoUpdate:" + infoSplit[0] +
-               "\nAutoUpdateDependencies:" + infoSplit[1] +
-               "\nFaces:" + infoSplit[2] +
-               "\nFinnishedDLFolderDialog:" + infoSplit[3] +
-               "\nDefultDlPath:" + infoSplit[4] +
-               "\nSendUsername:" + infoSplit[5]);
+                        MessageBox.Show(
+           "\nAutoUpdate:" + infoSplit[0] +
+           "\nAutoUpdateDependencies:" + infoSplit[1] +
+           "\nFaces:" + infoSplit[2] +
+           "\nFinnishedDLFolderDialog:" + infoSplit[3] +
+           "\nDefultDlPath:" + infoSplit[4] +
+           "\nSendUsername:" + infoSplit[5]);
 
                         //File.WriteAllText(userInfo, "Hello and Welcome" + Environment.NewLine, Encoding.UTF8);
                     }
