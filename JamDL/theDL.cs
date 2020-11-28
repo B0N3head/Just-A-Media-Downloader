@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -14,10 +16,16 @@ namespace MediaDL
         string mystuff = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + "\\JAMDL";
         string logpath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + "\\JAMDL\\log.txt";
 
-        string ytdl = "http://abf-downloads.openmandriva.org/ytdl/youtube-dl.exe";
-        string ffmpeg = "https://github.com/marierose147/ffmpeg_windows_exe_with_fdk_aac/releases/latest";
+        string[] ffmpegLinks = new string[] { "https://github.com/marierose147/ffmpeg_windows_exe_with_fdk_aac", "https://web.archive.org/web/20200916091820mp_/https://ffmpeg.zeranoe.com/builds/win64/shared/ffmpeg-4.3.1-win64-shared.zip" };
+        string[] ytdlLinks = new string[] { "https://github.com/ytdl-org/youtube-dl", "http://abf-downloads.openmandriva.org/ytdl/youtube-dl.exe" };
+
+        int[] linkValues = new int[] { 0, 0 };
 
         public Start next = new Start();
+
+        bool randomBool = false;
+
+        string preLogLogs = "";
 
         public theDL()
         {
@@ -27,45 +35,108 @@ namespace MediaDL
 
         void start()
         {
+
             try
             {
                 if (Directory.Exists(mystuff))
                 {
-
+                    preLogLogs += "Directory at " + mystuff + " exists" + Environment.NewLine;
                     //Try to kill any active youtube-dl's
                     foreach (Process proc in Process.GetProcessesByName("youtube-dl")) { proc.Kill(); }
 
-                    string[] paths = new string[] { mystuff + "\\ffmpeg.exe", mystuff + "\\youtube-dl.exe", logpath, mystuff + "\\userInfo", };
-                    foreach (string a in paths)
+                    //Remove anything leftover in the JamDL folder
+                    foreach (var sourceFilePath in Directory.GetFiles(mystuff))
                     {
-                        if (File.Exists(a))
-                            File.Delete(a);
+                        string fileName = Path.GetFileName(sourceFilePath);
+                        string destinationFilePath = Path.Combine(mystuff, fileName);
+                        File.Delete(sourceFilePath);
                     }
+                    /*                    string[] paths = new string[] { mystuff + "\\ffmpeg.exe", mystuff + "\\youtube-dl.exe", logpath, mystuff + "\\userInfo", };
+                                        foreach (string a in paths)
+                                        {
+                                            if (File.Exists(a))
+                                                File.Delete(a);
+                                        }*/
 
+                    LogDat(preLogLogs);
+
+                    //Check if I can access the internet
                     if (internet() == true)
                     {
-                        if (File.Exists(mystuff + "\\ffmpeg.exe"))
+                        LogDat("The user can access the internet, specifically google");
+
+                        string downHosts = "";
+                        int hostsDown = 0;
+
+                        LogDat("Finding online host from list");
+                        for (int i = 0; i < ffmpegLinks.Length + 1 && randomBool == false; i++)
                         {
-                            ErrorMsg("Uhh... thats awkward this is never ment to show", "Somehow the dependencies exist but don't, let me try again", "I don't understand?");
-                            Application.Restart();
+                            if (i > ffmpegLinks.Length)
+                            {
+                                hostsDown += 1;
+                            }
+                            else
+                            {
+                                if (internet(ffmpegLinks[i]))
+                                {
+                                    randomBool = true;
+                                    linkValues = new int[] { i, linkValues[1] };
+                                }
+                                else
+                                {
+                                    downHosts += "FFMPEG HOST:" + ffmpegLinks[i]; // Add down host to string
+                                }
+                            }
                         }
+
+                        for (int i = 0; i < ytdlLinks.Length + 1 && randomBool == false; i++)
+                        {
+                            if (i > ytdlLinks.Length)
+                            {
+                                hostsDown += 2;
+                            }
+                            else
+                            {
+                                if (internet(ytdlLinks[i]))
+                                {
+                                    randomBool = true;
+                                    linkValues = new int[] { linkValues[0], i };
+                                }
+                                else
+                                {
+                                    downHosts += "YTDL HOST:" + ytdlLinks[i]; // Add down host to string
+                                }
+                            }
+                        }
+                        LogDat("Down hosts: " + downHosts); // Print out all colected down hosts into text file for debuging if all are down
+                        LogDat("Chosen host for ffmpeg " + ffmpegLinks[linkValues[0]] + "\n" + "Chosen host for ytdl " + ytdlLinks[linkValues[1]]);
+
+                        if (hostsDown != 0) // This number will only go over 0 if all hosts for one of the dependecies are down
+                        {
+                            string build = "";
+                            switch (hostsDown)
+                            {
+                                case 1:
+                                    build = "ffmpeg";
+                                    break;
+                                case 2:
+                                    build = "ytdl";
+                                    break;
+                                case 3:
+                                    build = "ffmpeg or ytdl";
+                                    break;
+                            }
+
+                            ErrorMsg("No online hosts for " + build + " were found, is your internet on?", "Gona need more hosts I guess");
+                        }
+
+                        var webClient1 = new WebClient();
+                        webClient1.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted1);
+                        webClient1.DownloadProgressChanged += Wc_DownloadProgressChanged1;
+                        if (linkValues[0] == 0)
+                            webClient1.DownloadFileAsync(new Uri(getGithubLink(ytdlLinks[linkValues[0]], "youtube-dl.exe")), mystuff + "\\youtube-dl.exe");
                         else
-                        {
-                            LogDat("Created Directory at " + mystuff);
-
-                            var webClient1 = new WebClient();
-                            webClient1.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted1);
-                            webClient1.DownloadProgressChanged += Wc_DownloadProgressChanged1;
-
-                            LogDat("Starting Download of yt-dl");
-                            textBox1.Text = "Grabbing Dependencies 1/2";
-                            if (!internet(ytdl))
-                                ErrorMsg("The host for youtube-dl is currently down." + Environment.NewLine + "Please check back later", "Can not reach yt-dl services");
-                            if (!internet(ffmpeg))
-                                ErrorMsg("The host for ffmpeg is currently down." + Environment.NewLine + "Please check back later", "Can not reach ffmpeg services");
-
-                            webClient1.DownloadFileAsync(new Uri(ytdl), mystuff + "\\youtube-dl.exe");
-                        }
+                            webClient1.DownloadFileAsync(new Uri(ytdlLinks[linkValues[0]]), mystuff + "\\youtube-dl.exe");
                     }
                     else
                     {
@@ -74,6 +145,7 @@ namespace MediaDL
                 }
                 else
                 {
+                    preLogLogs += "Directory at " + mystuff + " does not exist, creating it now" + Environment.NewLine;
                     Directory.CreateDirectory(mystuff);
                     start();
                 }
@@ -91,33 +163,62 @@ namespace MediaDL
             }
         }
 
+        private string getGithubLink(string ltbc, string fileWanted) //had added 32 bit downloading var but decieded against it cause i cant be bothered, who tf is still using 32 bit windows
+        {
+            if (!ltbc.Contains("/releases/latest"))
+                ltbc += "/releases/latest";
+            return WebRequest.Create(Regex.Replace(WebRequest.Create(ltbc).GetResponse().ResponseUri.ToString() + "/" + fileWanted, "tag", "download")).GetResponse().ResponseUri.ToString();
+        }
+
         private void DownloadFileCompleted1(object sender, AsyncCompletedEventArgs e)
         {
             LogDat("Downloaded yt-dl");
+
             var webClient2 = new WebClient();
             webClient2.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
             webClient2.DownloadProgressChanged += Wc_DownloadProgressChanged2;
+
             textBox1.Text = "Grabbing Dependencies 2/2";
             LogDat("Starting Download of ffmpeg");
 
-            WebResponse response = WebRequest.Create(ffmpeg).GetResponse();
-            LogDat("Is this a valid link?: " + Regex.Replace(response.ResponseUri.ToString() + "/ffmpeg-win64-gpl.exe", "tag", "download"));
-            if (Environment.Is64BitOperatingSystem)
-            {
-                response = WebRequest.Create(Regex.Replace(response.ResponseUri.ToString() + "/ffmpeg-win64-gpl.exe", "tag", "download")).GetResponse();
-
-            }
+            if (linkValues[1] == 0)
+                webClient2.DownloadFileAsync(new Uri(getGithubLink(ffmpegLinks[linkValues[1]], "ffmpeg-win64-gpl.exe")), mystuff + "\\ffmpeg.exe");
             else
-            {
-                response = WebRequest.Create(Regex.Replace(response.ResponseUri.ToString() + "/ffmpeg-win32-gpl.exe", "tag", "download")).GetResponse();
-            }
-
-            LogDat("Is this a valid link?: " + response.ResponseUri.ToString());
-
-            webClient2.DownloadFileAsync(new Uri(response.ResponseUri.ToString()), mystuff + "\\ffmpeg.exe");
+                webClient2.DownloadFileAsync(new Uri(ffmpegLinks[linkValues[1]]), mystuff + "\\ffmpeg.zip");
         }
 
-        public static bool internet(string link = "http://www.google.com") { try { WebResponse myResponse = WebRequest.Create(link).GetResponse(); } catch (WebException) { return false; } return true; }
+        public bool internet(string link = "http://www.google.com")
+        {
+            try
+            {
+                var request = WebRequest.Create(new Uri(link));
+                using (var response = request.GetResponse())
+                {
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError &&
+                    ex.Response != null)
+                {
+                    var resp = (HttpWebResponse)ex.Response;
+                    if (resp.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        LogDat(link + " returned a 404 error");
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
 
         // used for displaying what the program is doing, but not errors
         private void LogDat(string loginfo) { File.AppendAllText(logpath, "Time: " + DateTime.Now.ToLongTimeString() + " | Info: " + loginfo + Environment.NewLine); }
@@ -131,9 +232,17 @@ namespace MediaDL
                 if (isFileFucked("\\ffmpeg.exe") || isFileFucked("\\youtube-dl.exe"))
                     ErrorMsg("Somthing went wrong while downloading the dependencies", "Internet Issue?", "One of the files has a size 0kb after fully downloaded");
 
-                System.Threading.Thread.Sleep(100);
+                ZipFile.ExtractToDirectory(mystuff + @"\ffmpeg.zip", mystuff);
+                MessageBox.Show("Shot");
+                LogDat("Moving exe's from ffmpeg\\bin to " + mystuff);
+
+                File.Copy("ffmpeg-4.3.1-win64-shared\\bin\\ffmpeg.exe", mystuff, true);
+                textBox1.Text = "Cleaning Up";
+                Directory.Delete(mystuff + "\\ffmpeg\\ffmpeg-4.3.1-win64-shared", true);
+                File.Delete(mystuff + @"\ffmpeg.zip");
+
                 LogDat("Creating settings file" + mystuff);
-                if (File.Exists(mystuff+"\\userInfo"))
+                if (File.Exists(mystuff + "\\userInfo"))
                     File.Delete(mystuff + "\\userInfo");
                 File.WriteAllText(mystuff + "\\userInfo", "y|y|y|y|noPath|y" + Environment.NewLine + "Last Edited At: " + DateTime.Now, Encoding.UTF8);
                 Application.Restart();
@@ -186,8 +295,8 @@ namespace MediaDL
             }
         }
 
-        void Wc_DownloadProgressChanged1(object sender, DownloadProgressChangedEventArgs e) { progressBar1.Value = (e.ProgressPercentage / 3); textBox1.Text = "YT-DL: " + e.BytesReceived / 1024 + "/" + e.TotalBytesToReceive / 1024; }
+        void Wc_DownloadProgressChanged1(object sender, DownloadProgressChangedEventArgs e) { progressBar1.Value = (e.ProgressPercentage / 3); textBox1.Text = "YT-DL: " + e.BytesReceived / 10240 + "/" + e.TotalBytesToReceive / 10240; }
 
-        void Wc_DownloadProgressChanged2(object sender, DownloadProgressChangedEventArgs e) { progressBar1.Value = (e.ProgressPercentage / 3 + 33); textBox1.Text = "FFMpeg: " + e.BytesReceived / 102400 + "/" + e.TotalBytesToReceive / 102400; }
+        void Wc_DownloadProgressChanged2(object sender, DownloadProgressChangedEventArgs e) { progressBar1.Value = (e.ProgressPercentage / 3 + 33); textBox1.Text = "FFMpeg: " + e.BytesReceived / 10240 + "/" + e.TotalBytesToReceive / 10240; }
     }
 }

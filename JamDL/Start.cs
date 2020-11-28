@@ -16,7 +16,7 @@ namespace MediaDL
 {
     public partial class Start : Form
     {
-        [DllImport("user32.dll")]  public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")] public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImport("user32.dll")] public static extern bool ReleaseCapture();
         [DllImport("user32.dll")] private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
         [DllImport("user32.dll")] static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
@@ -418,12 +418,12 @@ namespace MediaDL
         public void weBeDone()
         {
 
-/*            WebClient client = new WebClient();
-            string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
-            if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + junkSplit[1].ToString() + @"/" + (int.Parse(junkSplit[2]) + 1) + "/" + DateTime.Now + "{.}" + TimeZone.CurrentTimeZone.StandardName).ToLower() == "ok")
-                MessageBox.Show("sentInfo");
-            else
-                MessageBox.Show("Fuck");*/
+            /*            WebClient client = new WebClient();
+                        string[] junkSplit = Regex.Split(client.DownloadString("http://dreamlo.com/lb/5f91541aeb371809c4990e77/pipe-get/" + Environment.UserName), @"\|");
+                        if (client.DownloadString("http://dreamlo.com/lb/0Wq0nSNOD0yNkCjiGiBbmQq8WJsi90T0Kk_IykGe2ZkQ/add/" + Environment.UserName + @"/" + junkSplit[1].ToString() + @"/" + (int.Parse(junkSplit[2]) + 1) + "/" + DateTime.Now + "{.}" + TimeZone.CurrentTimeZone.StandardName).ToLower() == "ok")
+                            MessageBox.Show("sentInfo");
+                        else
+                            MessageBox.Show("Fuck");*/
             Process[] pname = Process.GetProcessesByName("youtube-dl");
             if (!(pname.Length > 0))
             {
@@ -729,6 +729,16 @@ namespace MediaDL
 
         }
 
+        bool isFileFucked(string file)
+        {
+            FileInfo info = new FileInfo(mystuff + file);
+            int size = (int)info.Length / 1024;
+            if (size > 0)
+                return false;
+            else
+                return true; //rip file
+        }
+
         string userInfo = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString() + @"\JAMDL\userInfo";
         private void Start_Load(object sender, EventArgs e)
         {
@@ -738,7 +748,7 @@ namespace MediaDL
                 MessageBox.Show("There is already an instance of JamDL open");
                 Application.Exit();
             }
-            if (!(File.Exists(mystuff + @"\ffmpeg.exe")))
+            if (!File.Exists(mystuff + "\\ffmpeg.exe") || !File.Exists(mystuff + "\\youtube-dl.exe"))
             {
                 openChildForm(new theDL());
                 panel2.BringToFront();
@@ -748,6 +758,16 @@ namespace MediaDL
             }
             else
             {
+                if (isFileFucked("\\ffmpeg.exe") || isFileFucked("\\youtube-dl.exe")) // If true then the files are all good
+                {
+                    MessageBox.Show("There is already an instance of JamDL open");
+                    openChildForm(new theDL());
+                    panel2.BringToFront();
+                    this.Size = new Size(268, 98);
+                    panel2.Size = this.Size;
+                    this.Text = "Downloading Files";
+                }
+
                 if (!File.Exists(eulaCheck))
                 {
                     if (MessageBox.Show("By clicking yes you understand that this is just a gui for another program" + Environment.NewLine + "This program is curently in development so expect changes" + Environment.NewLine + "This will only popup once", "Quick Read", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
