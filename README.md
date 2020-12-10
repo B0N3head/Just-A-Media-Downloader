@@ -2,7 +2,7 @@
 
 <img align="left" width="110" height="110" src="https://raw.githubusercontent.com/B0N3head/Just-A-Media-Downloader/master/JamDL/Resources/cry.png">
 
->Not containing any youtbe-dl code since June 2020
+>Not containing any youtube-dl code since June 2020
 
 Download anything from youtube, vimeo, phub and much more in almost any format, audio or video.
 
